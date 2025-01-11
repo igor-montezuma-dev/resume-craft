@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { BaseDialogProps, Dialog } from "@/components/ui/dialog";
 import { EditorField } from "@/components/ui/editor/field";
+import { IconField } from "@/components/ui/icon-input/field";
 import { InputField } from "@/components/ui/input/field";
 import { cn } from "@/lib/utils";
 import { Fragment, useMemo } from "react";
@@ -258,6 +259,7 @@ export const ManageMultipleItemDialog = ({
         <Fragment key={index}>
           {fieldType === "text" && <InputField {...inputProps} />}
           {fieldType === "editor" && <EditorField {...inputProps} />}
+          {fieldType === "icon" && <IconField {...inputProps} />}
         </Fragment>
       );
     });
