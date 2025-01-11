@@ -6,15 +6,16 @@ import { IconField } from "@/components/ui/icon-input/field";
 import { InputField } from "@/components/ui/input/field";
 import { SliderField } from "@/components/ui/slider/field";
 import { cn } from "@/lib/utils";
-import { Fragment, useMemo } from "react";
+import { Fragment, useEffect, useMemo } from "react";
 import { FormProvider, useForm, useFormContext } from "react-hook-form";
+import { toast } from "sonner";
 import { v4 as uuid } from "uuid";
 import { MultipleDragItemData, ResumeArrayKeys } from ".";
-import { toast } from "sonner";
 
 type ManageMultipleItemDialogProps = BaseDialogProps & {
   data: MultipleDragItemData;
   setOpen: (value: boolean) => void;
+  initialData: any;
 };
 
 type FormConfig<T> = {
@@ -237,10 +238,19 @@ export const ManageMultipleItemDialog = ({
   data,
   open,
   setOpen,
+  initialData,
 }: ManageMultipleItemDialogProps) => {
   const methods = useForm();
 
   const { setValue, getValues } = useFormContext<ResumeData>();
+
+  const isEditing = !!initialData;
+
+  useEffect(() => {
+    if (initialData) {
+      methods.reset(initialData);
+    }
+  }, [initialData, methods]);
 
   const formContent = useMemo(() => {
     const config = formConfig[data.formKey];
@@ -288,6 +298,23 @@ export const ManageMultipleItemDialog = ({
 
     const formKey = data.formKey;
     const currentFieldValue = currentValue.content[formKey] ?? [];
+
+    if (isEditing) {
+      const updatedItems = currentFieldValue.map((item: any) => {
+        if (item.id === initialData.id) {
+          return {
+            ...formData,
+          };
+        }
+
+        return item;
+      });
+      setValue(`content.${formKey}`, updatedItems);
+      setOpen(false);
+      toast.success("Item atualizado com sucesso");
+      return;
+    }
+
     setValue(`content.${formKey}`, [
       ...currentFieldValue,
       {
@@ -314,8 +341,13 @@ export const ManageMultipleItemDialog = ({
           </div>
 
           <div className="flex ml-auto gap-3">
+            {isEditing && (
+              <Button variant="destructive" >
+                Remover
+              </Button>
+            )}
             <Button type="submit" className="w-max">
-              Adicionar
+              {isEditing ? "Atualizar" : "Adicionar"}
             </Button>
           </div>
         </form>
