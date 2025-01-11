@@ -1,7 +1,6 @@
 import { Controller, useFormContext } from "react-hook-form";
-import { FieldWrapper } from "../field-wrapper";
 import { IconInput } from ".";
-
+import { FieldWrapper } from "../field-wrapper";
 
 type IconFieldProps = {
   label: string;
@@ -28,11 +27,12 @@ export const IconField = ({
         required: required && "Campo obrigatório",
       }}
       render={({ field, fieldState }) => (
-        <FieldWrapper label={label} className={containerClassName}>
+        <FieldWrapper
+          label={label}
+          className={containerClassName}
+          error={fieldState?.error}
+        >
           <IconInput {...props} {...field} />
-          {fieldState.error && (
-            <p className="text-sm text-red-500">{fieldState.error.message}</p>
-          )}
         </FieldWrapper>
       )}
     />
