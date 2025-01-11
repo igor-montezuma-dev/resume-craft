@@ -326,6 +326,21 @@ export const ManageMultipleItemDialog = ({
     toast.success("Item adicionado com sucesso");
   };
 
+  const onDelete = () => {
+    const currentValue = getValues();
+
+    const formKey = data.formKey;
+    const currentFieldValue = currentValue.content[formKey] ?? [];
+
+    const updatedItems = currentFieldValue.filter(
+      (item: any) => item.id !== initialData.id
+    );
+
+    setValue(`content.${formKey}`, updatedItems);
+    setOpen(false);
+    toast.success("Item removido com sucesso");
+  };
+
   return (
     <Dialog
       title="Adicionar novo item"
@@ -342,7 +357,7 @@ export const ManageMultipleItemDialog = ({
 
           <div className="flex ml-auto gap-3">
             {isEditing && (
-              <Button variant="destructive" >
+              <Button variant="destructive" onClick={onDelete}>
                 Remover
               </Button>
             )}
