@@ -1,3 +1,4 @@
+import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import {
   DragDropContext,
@@ -5,7 +6,7 @@ import {
   Droppable,
   DropResult,
 } from "@hello-pangea/dnd";
-import { GripVertical, LucideIcon } from "lucide-react";
+import { GripVertical, LucideIcon, Plus } from "lucide-react";
 import { useFieldArray, useFormContext } from "react-hook-form";
 import { SectionTitle } from "../section-title";
 
@@ -44,10 +45,18 @@ export const MultipleDragList = ({
     move(source.index, destination.index);
   };
 
+  const isEmpty = fields.length === 0;
+
   return (
     <div>
       <SectionTitle title={data.title} icon={data.icon} />
       <div className="flex flex-col mt-4">
+        {isEmpty && (
+          <Button variant="outline" className="w-full gap-2" onClick={onAdd}>
+            <Plus size={16} />
+            Adicionar Item
+          </Button>
+        )}
         {!!fields.length && (
           <DragDropContext onDragEnd={handleDrag}>
             <Droppable droppableId={`droppable-${data.formKey}`}>
