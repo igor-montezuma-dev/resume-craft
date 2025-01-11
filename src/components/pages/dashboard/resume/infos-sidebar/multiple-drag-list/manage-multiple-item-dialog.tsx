@@ -1,3 +1,4 @@
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { BaseDialogProps, Dialog } from "@/components/ui/dialog";
 import { EditorField } from "@/components/ui/editor/field";
@@ -262,6 +263,19 @@ export const ManageMultipleItemDialog = ({
           {fieldType === "editor" && <EditorField {...inputProps} />}
           {fieldType === "icon" && <IconField {...inputProps} />}
           {fieldType === "slider" && <SliderField {...inputProps} />}
+          {fieldType === "keywords" && (
+            <InputField
+              {...inputProps}
+              extraContent={(value) => (
+                <div className="flex gap-2 flex-wrap mt-1">
+                  {value?.split(",").map((keyword, index) => {
+                    if (!keyword.trim()) return null;
+                    return <Badge key={`keyword-${index}`}>{keyword}</Badge>;
+                  })}
+                </div>
+              )}
+            />
+          )}
         </Fragment>
       );
     });
