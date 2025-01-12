@@ -85,6 +85,8 @@ type ResumeLayoutSection = {
   key: ResumeSections;
 };
 
+type ResumeLanguages = "english" | "portuguese" |"spanish" | "french" | "german" | "italian";
+
 type ResumeStructureData = {
   template: ResumeTemplates;
   colorTheme: string;
@@ -109,3 +111,10 @@ type ResumeSections =
   | "languages"
   | "certifications"
   | "projects";
+
+type ResumeTemplates =
+  | "eevee"
+  | "onix"
+  | "jynx"
+  | "ditto"
+
