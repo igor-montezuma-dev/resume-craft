@@ -79,7 +79,7 @@ export const LayoutDragList = ({ title, fields }: LayoutDragListProps) => {
   const language = watch("structure.language");
   return (
     <div className="w-full p-2 bg-muted rounded">
-      <p className="font-tile text-sm font-bold mb-2">{title}</p>
+      <p className="font-title text-sm font-bold mb-2">{title}</p>
       <div className="flex flex-col gap-2">
         {fields.map((field, index) => (
           <Draggable
