@@ -1,11 +1,13 @@
 import { Separator } from "@/components/ui/separator";
+import { LayoutSection } from "./sections/layout";
 import { TemplatesListSection } from "./sections/templates-list";
 
 export const StructureSidebar = () => {
   return (
-    <aside className="size-full p-6 overflow-y-auto">
+    <aside className="w-full h-full p-6 overflow-y-auto">
       <TemplatesListSection />
       <Separator className="my-5" />
+      <LayoutSection />
     </aside>
   );
 };

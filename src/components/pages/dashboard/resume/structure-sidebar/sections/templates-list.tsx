@@ -12,6 +12,7 @@ export const TemplatesListSection = () => {
   return (
     <div>
       <SectionTitle title="Modelos" icon={LayoutTemplate} />
+
       <Controller
         control={control}
         name="structure.template"
@@ -19,10 +20,11 @@ export const TemplatesListSection = () => {
           <div className="w-full grid grid-cols-2 gap-4 mt-4">
             {allTemplates.map((template) => {
               const isSelected = field.value === template;
+
               return (
                 <button
-                  type="button"
                   key={`template-${template}`}
+                  type="button"
                   className={cn(
                     "w-full aspect-auto relative rounded border-2 border-muted overflow-hidden hover:brightness-125 transition-all",
                     isSelected && "border-muted-foreground"
@@ -30,16 +32,17 @@ export const TemplatesListSection = () => {
                   onClick={() => field.onChange(template)}
                 >
                   <Image
-                    className="size-full object-cover "
+                    className="w-full h-full object-cover"
                     width={150}
                     height={130}
                     src={`/images/templates/${template}.webp`}
                     alt={template}
                   />
+
                   <div
                     className={cn(
-                      "size-full flex flex-col items-center justify-end p-2 absolute text-sm font-bold font-title",
-                      "capitalize bg-gradient-to-t from-background inset-0"
+                      "absolute text-sm inset-0 w-full h-full flex flex-col font-bold font-title capitalize",
+                      "items-center justify-end p-2 bg-gradient-to-t from-background"
                     )}
                   >
                     {template}
