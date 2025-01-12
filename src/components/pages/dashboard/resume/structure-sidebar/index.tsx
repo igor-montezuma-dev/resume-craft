@@ -1,4 +1,5 @@
 import { Separator } from "@/components/ui/separator";
+import { LanguagesSection } from "./sections/languages";
 import { LayoutSection } from "./sections/layout";
 import { TemplatesListSection } from "./sections/templates-list";
 import { ThemeSection } from "./sections/theme";
@@ -11,6 +12,8 @@ export const StructureSidebar = () => {
       <LayoutSection />
       <Separator className="my-5" />
       <ThemeSection />
+      <Separator className="my-5" />
+      <LanguagesSection />
     </aside>
   );
 };
