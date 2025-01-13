@@ -19,7 +19,6 @@ const colorKeys = Object.keys(colors).filter(
 ) as (keyof typeof colors)[];
 
 export const ThemeSection = () => {
-  console.log(colorKeys);
   const { control } = useFormContext<ResumeData>();
   return (
     <div>
