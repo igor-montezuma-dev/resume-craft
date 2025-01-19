@@ -1,8 +1,11 @@
 import { ThemeProvider } from "@/components/shared/theme-provider";
 import { cn } from "@/lib/utils";
+import { setDefaultOptions } from "date-fns";
+import { ptBR } from "date-fns/locale";
 import type { Metadata } from "next";
 import { Nunito, Nunito_Sans } from "next/font/google";
 import { Toaster } from "sonner";
+
 import "../styles/globals.css";
 
 const fontSans = Nunito_Sans({ subsets: ["latin"], variable: "--font-sans" });
@@ -11,6 +14,8 @@ const fontTitle = Nunito({ subsets: ["latin"], variable: "--font-title" });
 export const metadata: Metadata = {
   title: "ResumeCraft",
 };
+
+setDefaultOptions({ locale: ptBR });
 
 export default function RootLayout({
   children,
