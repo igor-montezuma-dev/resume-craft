@@ -6,10 +6,22 @@ import { revalidatePath } from "next/cache";
 import { db } from "./drizzle";
 import { resumes } from "./schema";
 
-export const createResume = async (title: string) => {
+const getUserIdOrThrow = async () => {
   const session = await auth();
 
   const userId = session?.user?.id;
+
+  if (!userId) {
+    throw new Error("Usuário não encontrado.");
+  }
+
+  return userId;
+};
+
+export const createResume = async (title: string) => {
+  const session = await auth();
+
+  const userId = await getUserIdOrThrow();
 
   if (!userId) {
     throw new Error("Usuário não encontrado.");
@@ -26,13 +38,7 @@ export const createResume = async (title: string) => {
 };
 
 export const updateResumeData = async (id: string, data: ResumeData) => {
-  const session = await auth();
-
-  const userId = session?.user?.id;
-
-  if (!userId) {
-    throw new Error("Usuário não encontrado.");
-  }
+  await getUserIdOrThrow();
 
   const updatedResume = await db
     .update(resumes)
@@ -43,4 +49,23 @@ export const updateResumeData = async (id: string, data: ResumeData) => {
   revalidatePath("/dashboard/resumes");
 
   return updatedResume[0];
+};
+
+export const deleteResume = async (id: string) => {
+  const userId = await getUserIdOrThrow();
+  const resume = await db.query.resumes.findFirst({
+    where: eq(resumes.id, id),
+  });
+
+  if (!resume) {
+    throw new Error("Currículo não encontrado.");
+  }
+
+  if (resume.userId !== userId) {
+    throw new Error("Usuário não autorizado.");
+  }
+
+  await db.delete(resumes).where(eq(resumes.id, id)).execute();
+
+  revalidatePath("/dashboard/resumes");
 };
