@@ -5,27 +5,35 @@ import {
   ResizablePanel,
   ResizablePanelGroup,
 } from "@/components/ui/resizable";
+import { User } from "next-auth";
 import { FormProvider, useForm } from "react-hook-form";
 import { InfosSidebar } from "./infos-sidebar";
 import { ResumeContent } from "./resume-content";
 import { StructureSidebar } from "./structure-sidebar";
 
-export const ResumePage = () => {
+type ResumePageProps = {
+  title: string;
+  initialData: Partial<ResumeData>;
+  user?: User;
+};
+
+export const ResumePage = ({ title, initialData, user }: ResumePageProps) => {
   const defaultValues: ResumeData = {
     content: {
+      summary: "<p></p>",
       image: {
-        url: "",
+        url: user?.image ?? "",
         visible: true,
       },
       infos: {
-        fullName: "",
-        email: "",
+        fullName: user?.name ?? "",
+        email: user?.email ?? "",
         headline: "",
         location: "",
         phone: "",
         website: "",
       },
-      summary: "",
+
       certifications: [],
       educations: [],
       experiences: [],
