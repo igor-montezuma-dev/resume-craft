@@ -20,7 +20,7 @@ const getUserIdOrThrow = async () => {
 
 export const createResume = async (title: string) => {
   const session = await auth();
-
+  
   const userId = await getUserIdOrThrow();
 
   if (!userId) {
