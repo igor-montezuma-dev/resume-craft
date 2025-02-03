@@ -118,3 +118,4 @@ type ResumeTemplates =
   | "jynx"
   | "ditto"
 
+type AIGenerationMode = "JOB_TITLE" | "FIX_CONTENT" | "TRANSLATE_CONTENT";
