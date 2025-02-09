@@ -3,11 +3,15 @@ import { GenerateFromJobTitle } from "./job-title";
 
 type GenerationDialogProps = BaseDialogProps & {
   mode: AIGenerationMode;
+  setOpen: (open: boolean) => void;
 };
 
 export const GenerationDialog = ({ mode, ...props }: GenerationDialogProps) => {
+  const onClose = () => {
+    props.setOpen(false);
+  };
   const configPerMode: Record<AIGenerationMode, JSX.Element> = {
-    JOB_TITLE: <GenerateFromJobTitle />,
+    JOB_TITLE: <GenerateFromJobTitle onClose={onClose} />,
     FIX_CONTENT: <div>Melhorar e corrigir conteúdo existente</div>,
     TRANSLATE_CONTENT: <div>Traduzir conteúdo</div>,
   };
