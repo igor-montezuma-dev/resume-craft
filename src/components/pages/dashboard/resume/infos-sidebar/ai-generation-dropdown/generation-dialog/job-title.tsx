@@ -1,6 +1,8 @@
 import { Button } from "@/components/ui/button";
 import { EditorField } from "@/components/ui/editor/field";
 import { InputField } from "@/components/ui/input/field";
+import { ApiService } from "@/services/api";
+import { useMutation } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 
 type FormData = {
@@ -11,7 +13,12 @@ type FormData = {
 export const GenerateFromJobTitle = () => {
   const { control, formState, handleSubmit } = useForm<FormData>();
 
-  const onSubmit = (data: FormData) => {
+  const { mutateAsync: handleGenerateContent } = useMutation({
+    mutationFn: ApiService.generateContentForJob,
+  });
+
+  const onSubmit = async (formData: FormData) => {
+    const data = await handleGenerateContent(formData);
     console.log(data);
   };
 
